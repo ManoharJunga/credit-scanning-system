@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Upload Document</h1>
+    </header>
+
+    <main>
+        <form id="upload-form" enctype="multipart/form-data">
+            <div>
+                <label for="document">Select Document:</label>
+                <input type="file" id="document" name="document" accept=".pdf, .jpg, .jpeg, .png" required>
+            </div>
+            <button type="submit">Upload</button>
+        </form>
+        <div id="upload-message"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Credit Scanning System</p>
+    </footer>
+
+    <script src="js/upload.js"></script>
+</body>
+</html>

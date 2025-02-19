@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome, <span id="user-name">User</span></h1>
+    </header>
+
+    <main>
+        <h2>Your Profile</h2>
+        <p><strong>Username:</strong> <span id="profile-username"></span></p>
+        <p><strong>Credits:</strong> <span id="credits">0</span></p>
+
+        <h3>Request Credits</h3>
+        <form id="credits-form">
+            <input type="number" id="credit-amount" placeholder="Enter amount" required>
+            <button type="submit">Request Credits</button>
+        </form>
+
+        <h3>Your Document Scans</h3>
+        <div id="scan-history"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Credit Scanning System</p>
+    </footer>
+
+    <script src="js/profile.js"></script>
+</body>
+</html>
