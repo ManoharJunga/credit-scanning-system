@@ -34,13 +34,30 @@ db.run(`
     requested_credits INTEGER NOT NULL,
     status TEXT DEFAULT 'pending',  -- Can be 'pending', 'approved', or 'denied'
     request_date TEXT DEFAULT CURRENT_DATE,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   )
 `, (err) => {
   if (err) {
     console.error('Error creating credit_requests table:', err.message);
   } else {
     console.log('Credit requests table created or already exists.');
+  }
+});
+
+// Create uploads table to store files per user
+db.run(`
+  CREATE TABLE IF NOT EXISTS uploads (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filename TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  )
+`, (err) => {
+  if (err) {
+    console.error('Error creating uploads table:', err.message);
+  } else {
+    console.log('Uploads table created or already exists.');
   }
 });
 

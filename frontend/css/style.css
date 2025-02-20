@@ -52,38 +52,3 @@ form {
     display: flex;
     flex-direction: column;
 }
-
-form input,
-form button {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-form button {
-    background-color: #0044cc;
-    color: white;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #0033aa;
-}
-
-.error {
-    color: red;
-    font-size: 0.9rem;
-}
-
-#upload-message {
-    margin-top: 20px;
-    color: green;
-}
-
-#scan-history {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-}

@@ -1,0 +1,210 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+/* Navigation Bar */
+header {
+    background: linear-gradient(to right, #1e3a8a, #3b82f6);
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+header h1 {
+    font-size: 22px;
+}
+
+/* User Info */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.credits-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#logout-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Sliding Tab Buttons */
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    background: white;
+    padding: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    color: #333;
+}
+
+.tab-btn.active {
+    font-weight: bold;
+    border-bottom: 3px solid #3b82f6;
+}
+
+/* Tab Content */
+.tab-content {
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.tab-pane {
+    display: none;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+/* Profile Card */
+.profile-card, .scan-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.profile-icon {
+    font-size: 60px;
+    color: #1e3a8a;
+}
+
+/* Buttons */
+.btn-request {
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.btn-request:hover {
+    background: linear-gradient(135deg, #ff3c7e, #ff616d);
+}
+/* Fade-in effect */
+.tab-pane {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.tab-pane.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Button Hover Effect */
+.btn-request, #logout-btn {
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-request:hover, #logout-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Tab Button Hover */
+.tab-btn {
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: #1e3a8a;
+}
+
+/* Profile Icon Animation */
+.profile-icon {
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+}
+/* Credits Tab - Glassmorphism */
+.credit-card {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Animated Credit Display */
+#credit-display {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff9800;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+#form-group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#credit-amount {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#credit-amount:focus {
+    border-color: #007bff;
+}
+
+/* Success Message Animation */
+.success-message {
+    display: none;
+    font-size: 18px;
+    color: #4caf50;
+    margin-top: 15px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

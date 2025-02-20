@@ -5,6 +5,7 @@ require('dotenv').config();
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const creditRoutes = require('./routes/creditRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/credits', creditRoutes);
+app.use('/upload', uploadRoutes);
 
 // Define the port to listen on, defaulting to 3000 if not specified in .env
 const port = process.env.PORT || 3000;

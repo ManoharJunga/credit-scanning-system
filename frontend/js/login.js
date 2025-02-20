@@ -27,7 +27,7 @@ document.getElementById('login-form')?.addEventListener('submit', async (e) => {
                 window.location.href = 'admin.html'; // Redirect to admin dashboard
             } else if (data.user && data.user.role) {
                 localStorage.setItem('username', data.user.username); // Store username in localStorage
-                window.location.href = 'profile.html'; // Redirect to user profile
+                window.location.href = 'dashboard.html'; // Redirect to user profile
             } else {
                 document.getElementById('error-message').textContent = 'User data is missing.';
             }

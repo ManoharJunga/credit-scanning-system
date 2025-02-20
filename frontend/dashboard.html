@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload a Document</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1><i class="fa-solid fa-file-upload"></i> Cathago Document Scanning System</h1>
+        <div class="user-info">
+            <a href="profile.html" id="username-link">
+                <i class="fa-solid fa-user"></i>
+                <span id="username-display">Loading...</span>
+            </a>
+            <span id="user-credits" class="credits-badge">
+                <i class="fa-solid fa-coins"></i> Credits: -
+            </span>
+            <button id="logout-btn">
+                <i class="fa-solid fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </header>
+    
+    <main>
+        <p class="description">Each document upload will deduct 1 credit from your account.</p>
+        <div id="drop-zone" class="drop-zone">
+            <p>Drag & Drop a file here or click to select</p>
+            <input type="file" id="file-input" hidden>
+        </div>
+        <button id="upload-btn">Upload</button>
+        <div id="upload-status"></div>
+    </main>
+    
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
