@@ -3,6 +3,7 @@ class Dashboard {
         console.log("✅ Dashboard.js Loaded");
         await this.loadUserData();
         this.setupUploadArea();
+        this.setupLogoutButton();
     }
 
     static async loadUserData() {
@@ -120,6 +121,17 @@ class Dashboard {
             }
         }
     }
+    static setupLogoutButton() {
+        const logoutBtn = document.getElementById("logout-btn");
+        if (!logoutBtn) return;
+    
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("username");  // Clear username from storage
+            sessionStorage.removeItem("credits"); // Clear session credits
+            window.location.href = "login.html";  // Redirect to login page
+        });
+    }
+    
 }
 
 document.addEventListener("DOMContentLoaded", () => Dashboard.init());

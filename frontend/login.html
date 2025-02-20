@@ -4,31 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Credit Scanning System</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <header>
+    <div class="login-container">
         <h1>Login to Your Account</h1>
-    </header>
-
-    <main>
         <form id="login-form">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required placeholder="Enter username">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
             </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required placeholder="Enter password">
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
             </div>
             <button type="submit">Login</button>
+            <p id="error-message" class="error"></p>
         </form>
-        <div id="error-message" class="error"></div>
-    </main>
-
-    <footer>
-        <p>Don't have an account? <a href="register.html">Register here</a></p>
-    </footer>
+        <p class="register-link">Don't have an account? <a href="register.html">Register here</a></p>
+    </div>
 
     <script src="js/login.js"></script>
 </body>

@@ -4,31 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Credit Scanning System</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
-    <header>
+    <div class="register-container">
         <h1>Create an Account</h1>
-    </header>
-
-    <main>
         <form id="register-form">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Choose a username">
             </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter a strong password">
             </div>
             <button type="submit">Register</button>
+            <p id="error-message" class="error"></p>
         </form>
-        <div id="error-message" class="error"></div>
-    </main>
-
-    <footer>
-        <p>Already have an account? <a href="login.html">Login here</a></p>
-    </footer>
+        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+    </div>
 
     <script src="js/register.js"></script>
 </body>

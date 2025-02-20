@@ -1,30 +1,27 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
 }
 
 /* Navbar Styles */
 header {
     background: linear-gradient(to right, #1e3a8a, #3b82f6);
     color: white;
-    width: calc(100% - 80px); /* Subtracts 40px from both sides */
     padding: 15px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 
 header h1 {
-    margin: 0;
-    font-size: 1.8rem;
+    font-size: 22px;
 }
 
 #logout-btn {
@@ -50,7 +47,18 @@ header h1 {
     font-size: 1.2rem;
     color: white;
 }
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
+.credits-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
 #user-credits {
     background: rgba(255, 255, 255, 0.2);
     padding: 8px 15px;
