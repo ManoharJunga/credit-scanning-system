@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Scan Result</title>
+    <link rel="stylesheet" href="css/scan_result.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1><i class="fa-solid fa-file"></i> AI Document Analysis</h1>
+    </header>
+    
+    <div class="container">
+        <div class="left-panel">
+            <h2>Uploaded Document</h2>
+            <iframe id="document-viewer" src="" frameborder="0"></iframe>
+        </div>
+        <div class="right-panel">
+            <h2>AI Scan Results</h2>
+            <div id="scan-results">
+                <p>Analyzing document...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const filePath = params.get("file");
+            const aiResults = params.get("results");
+            
+            if (filePath) {
+                document.getElementById("document-viewer").src = filePath;
+            }
+            
+            if (aiResults) {
+                document.getElementById("scan-results").innerHTML = decodeURIComponent(aiResults);
+            }
+        });
+    </script>
+</body>
+</html>

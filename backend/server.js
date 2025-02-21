@@ -6,7 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const creditRoutes = require('./routes/creditRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
-
+const path = require('path');
 const app = express();
 
 // Enable Cross-Origin Resource Sharing (CORS)
@@ -20,6 +20,8 @@ app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/credits', creditRoutes);
 app.use('/upload', uploadRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 // Define the port to listen on, defaulting to 3000 if not specified in .env
 const port = process.env.PORT || 3000;

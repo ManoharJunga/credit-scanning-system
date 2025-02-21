@@ -5,35 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Credit Scanning System</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <h1>Admin Dashboard</h1>
+        <h1>📊 Admin Dashboard</h1>
         <nav>
-            <a href="admin.html">Dashboard</a>
-            <a href="login.html" id="logout">Logout</a>
+            <a href="admin.html"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="login.html" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <button id="dark-mode-toggle">🌙</button>
         </nav>
     </header>
 
     <main>
-        <h2>Pending Credit Requests</h2>
-        <table id="credit-requests">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Requested Amount</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Pending credit requests will appear here -->
-            </tbody>
-        </table>
-    </main>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="requests">📌 Pending Requests</button>
+            <button class="tab-button" data-tab="scans">📅 Scans Per User</button>
+            <button class="tab-button" data-tab="topics">🔥 Common Topics</button>
+            <button class="tab-button" data-tab="top-users">🏆 Top Users</button>
+            <button class="tab-button" data-tab="credits">📊 Credit Statistics</button>
+        </div>
 
-    <footer>
-        <p>&copy; 2025 Credit Scanning System</p>
-    </footer>
+        <section id="requests" class="tab-content active">
+            <h2>🚀 Pending Credit Requests</h2>
+            <table id="credit-requests">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Requested Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section id="scans" class="tab-content">
+            <h2>📅 Scans Per User</h2>
+            <table id="scans-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Scan Count</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section id="topics" class="tab-content">
+            <h2>🔥 Common Scanned Topics</h2>
+            <ul id="common-topics"></ul>
+        </section>
+
+        <section id="top-users" class="tab-content">
+            <h2>🏆 Top Users</h2>
+            <table id="top-users-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Total Scans</th>
+                        <th>Credits</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section id="credits" class="tab-content">
+            <h2>📊 Credit Usage Statistics</h2>
+            <div id="credit-stats"></div>
+        </section>
+    </main>
 
     <script src="js/admin.js"></script>
 </body>

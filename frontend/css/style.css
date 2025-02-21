@@ -1,54 +1,90 @@
-/* style.css */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
 
 header {
-    background-color: #3679ff;
+    background: #333;
     color: white;
-    padding: 1rem;
-    text-align: center;
-}
-
-footer {
-    background-color: #3679ff;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-}
-
-nav {
-    margin-top: 10px;
+    padding-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 10px;
-    font-size: 1.2rem;
+    margin-right: 15px;
 }
 
-nav a:hover {
-    text-decoration: underline;
+#dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
 }
 
-main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1, h2, h3 {
-    color: #333;
-}
-
-form {
+.tabs {
     display: flex;
-    flex-direction: column;
+    background: #ddd;
+    padding: 10px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+}
+
+.tab-button.active {
+    background: #333;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+button.approve-btn {
+    background: green;
+    color: white;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button.deny-btn {
+    background: red;
+    color: white;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.dark-mode {
+    background-color: #333;
+    color: white;
 }

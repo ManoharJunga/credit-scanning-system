@@ -1,4 +1,6 @@
 class Dashboard {
+    static selectedFiles = []; // Store files in memory until upload
+
     static async init() {
         console.log("✅ Dashboard.js Loaded");
         await this.loadUserData();
@@ -13,14 +15,13 @@ class Dashboard {
                 console.error("⚠️ No username found in storage.");
                 return;
             }
-    
+
             const response = await fetch(`http://localhost:3000/user/${username}`);
             const data = await response.json();
-    
-            console.log("Fetched user from DB:", data); // Debugging
+
+            console.log("Fetched user from DB:", data);
             let credits = data.credits; 
-            
-            // 🔹 Ensure elements exist before modifying them
+
             const usernameDisplay = document.getElementById("username-display");
             const creditCount = document.getElementById("user-credits");
 
@@ -29,13 +30,9 @@ class Dashboard {
                 return;
             }
 
-            // ✅ Correctly update credits while preserving the icon
             creditCount.innerHTML = `<i class="fa-solid fa-coins"></i> Credits: ${credits}`;
-
-            // ✅ Update username
             usernameDisplay.textContent = data.username;
 
-            // ✅ Store credits for session-based access
             sessionStorage.setItem("credits", credits);
         } catch (error) {
             console.error("❌ Error loading user data:", error);
@@ -58,25 +55,39 @@ class Dashboard {
             dropZone.classList.remove("highlight");
         });
 
-        dropZone.addEventListener("drop", async (e) => {
+        dropZone.addEventListener("drop", (e) => {
             e.preventDefault();
             dropZone.classList.remove("highlight");
             const files = Array.from(e.dataTransfer.files);
-            await this.handleFileUploads(files);
+            this.storeFiles(files);
         });
 
-        fileInput.addEventListener("change", async (e) => {
+        fileInput.addEventListener("change", (e) => {
             const files = Array.from(e.target.files);
-            await this.handleFileUploads(files);
+            this.storeFiles(files);
         });
 
-        uploadBtn.addEventListener("click", async () => {
-            const files = fileInput.files ? Array.from(fileInput.files) : [];
-            await this.handleFileUploads(files);
+        uploadBtn.addEventListener("click", async (e) => {
+            e.preventDefault(); 
+            if (this.selectedFiles.length === 0) {
+                alert("⚠️ No files selected!");
+                return;
+            }
+            await this.handleFileUploads();
         });
     }
 
-    static async handleFileUploads(files) {
+    static storeFiles(files) {
+        if (files.length === 0) return;
+
+        this.selectedFiles = files;
+        const uploadStatus = document.getElementById("upload-status");
+
+        uploadStatus.innerHTML = `<div class="alert alert-info">Selected Files: ${files.map(f => f.name).join(", ")}</div>`;
+        console.log("📂 Files Stored:", this.selectedFiles);
+    }
+
+    static async handleFileUploads() {
         const uploadStatus = document.getElementById("upload-status");
         let credits = parseInt(sessionStorage.getItem("credits")) || 0;
         const username = localStorage.getItem("username");
@@ -91,13 +102,13 @@ class Dashboard {
             return;
         }
 
-        for (const file of files) {
+        for (const file of this.selectedFiles) {
             uploadStatus.innerHTML = `<div class="alert">Uploading ${file.name}...</div>`;
 
             try {
                 const formData = new FormData();
                 formData.append("document", file);
-                formData.append("username", username); // 🔹 Ensure username is sent
+                formData.append("username", username);
 
                 const response = await fetch("http://localhost:3000/upload", {
                     method: "POST",
@@ -109,9 +120,18 @@ class Dashboard {
 
                 if (result.success) {
                     uploadStatus.innerHTML = `<div class="alert alert-success">✅ Upload Successful!</div>`;
+                    
                     credits--;
                     sessionStorage.setItem("credits", credits);
-                    this.loadUserData(); // 🔹 Reload user data after successful upload
+                    
+                    console.log("Updated credits:", credits);
+                    await new Promise(resolve => setTimeout(resolve, 500)); // Small delay
+                    this.loadUserData(); 
+
+                    console.log("Redirecting to:", `aiscan.html?doc=${encodeURIComponent(result.documentPath)}`);
+                    setTimeout(() => {
+                        window.location.href = `aiscan.html?doc=${encodeURIComponent(result.documentPath)}`;
+                    }, 1000);
                 } else {
                     uploadStatus.innerHTML = `<div class="alert alert-danger">❌ Upload Failed: ${result.message || "Unknown Error"}</div>`;
                 }
@@ -120,18 +140,21 @@ class Dashboard {
                 uploadStatus.innerHTML = `<div class="alert alert-danger">❌ Upload Failed. Check console.</div>`;
             }
         }
+
+        // Clear stored files after upload
+        this.selectedFiles = [];
     }
+
     static setupLogoutButton() {
         const logoutBtn = document.getElementById("logout-btn");
         if (!logoutBtn) return;
-    
+
         logoutBtn.addEventListener("click", () => {
-            localStorage.removeItem("username");  // Clear username from storage
-            sessionStorage.removeItem("credits"); // Clear session credits
-            window.location.href = "login.html";  // Redirect to login page
+            localStorage.removeItem("username");
+            sessionStorage.removeItem("credits");
+            window.location.href = "login.html";
         });
     }
-    
 }
 
 document.addEventListener("DOMContentLoaded", () => Dashboard.init());

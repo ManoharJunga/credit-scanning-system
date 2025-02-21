@@ -60,5 +60,21 @@ db.run(`
     console.log('Uploads table created or already exists.');
   }
 });
+db.run(`
+    CREATE TABLE IF NOT EXISTS scans (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      topic TEXT NOT NULL,
+      timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `, (err) => {
+    if (err) {
+      console.error('Error creating scans table:', err.message);
+    } else {
+      console.log('Scans table created or already exists.');
+    }
+  });
+  
 
 module.exports = db;

@@ -7,32 +7,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userCreditsElement = document.getElementById("user-credits");
     const uploadedFilesList = document.getElementById("uploaded-files");
 
-    // Redirect to login if no username is found
     if (!username) {
         window.location.href = "login.html";
         return;
     }
-
-    // Display Username
+    
     userNameElement.textContent = username;
     profileUsernameElement.textContent = username;
 
     try {
-        // Fetch and update credits
         const response = await fetch(`http://localhost:3000/user/${username}`);
         if (!response.ok) throw new Error("Failed to fetch user credits");
 
         const data = await response.json();
         const credits = data.credits || 0;
 
-        // Update credits in Profile Tab
         document.getElementById("credit-value").textContent = credits;
         document.querySelector("#credit-display span").textContent = credits;
-
-        // Update credits in header
         userCreditsElement.innerHTML = `<i class="fa-solid fa-coins"></i> Credits: ${credits}`;
 
-        // Fetch uploaded files
         const uploadsResponse = await fetch(`http://localhost:3000/upload/uploads/${username}`);
         if (!uploadsResponse.ok) throw new Error("Failed to fetch uploads");
 
@@ -43,7 +36,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             const listItem = document.createElement("div");
             listItem.classList.add("file-item");
 
-            // Determine file type
             let fileType = "file";
             if (file.filename.endsWith(".pdf")) fileType = "pdf";
             else if (file.filename.match(/\.(doc|docx|txt)$/)) fileType = "doc";
@@ -57,6 +49,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <a href="http://localhost:3000/uploads/${file.filename}" target="_blank">
                     <button class="view-btn"><i class="fa-solid fa-eye"></i> View</button>
                 </a>
+                <button class="delete-btn" onclick="deleteFile('${file.filename}', this)">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </button>
             `;
 
             uploadedFilesList.appendChild(listItem);
@@ -66,30 +61,76 @@ document.addEventListener("DOMContentLoaded", async function () {
         alert("An error occurred. Please try again later.");
     }
 
-    // Tab Switching with Animation
-    const tabs = document.querySelectorAll(".tab-btn");
-    const panes = document.querySelectorAll(".tab-pane");
+    window.deleteFile = async function (filename, button) {
+        if (!confirm("Are you sure you want to delete this file?")) return;
+
+        try {
+            const response = await fetch(`http://localhost:3000/upload/delete/${filename}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) throw new Error("Failed to delete file");
+
+            button.closest(".file-item").remove();
+            alert("File deleted successfully!");
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to delete file. Please try again.");
+        }
+    };
 
     function openTab(tabId) {
-        tabs.forEach(tab => tab.classList.remove("active"));
-        panes.forEach(pane => pane.classList.remove("active", "fade-in"));
+        document.querySelectorAll(".tab-btn").forEach(tab => tab.classList.remove("active"));
+        document.querySelectorAll(".tab-pane").forEach(pane => pane.classList.remove("active", "fade-in"));
 
         document.querySelector(`[onclick="openTab('${tabId}')"]`).classList.add("active");
-        const activePane = document.getElementById(tabId);
-        activePane.classList.add("active", "fade-in");
+        document.getElementById(tabId).classList.add("active", "fade-in");
     }
 
     window.openTab = openTab;
-
-    // Load default active tab
     openTab("profile-tab");
 
-    // Redirect to Dashboard
+    document.getElementById("credits-form").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        const creditAmount = parseInt(document.getElementById("credit-amount").value, 10);
+    
+        if (!username || isNaN(creditAmount) || creditAmount <= 0) {
+            alert("Please enter a valid credit amount.");
+            return;
+        }
+    
+        try {
+            const response = await fetch("http://localhost:3000/credits/request", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userId: username, requestedCredits: creditAmount }),
+            });
+    
+            const responseText = await response.text();
+            console.log("Response Text:", responseText);
+    
+            if (!response.ok) throw new Error("Failed to submit credit request");
+    
+            document.getElementById("success-message").style.display = "block";
+            document.getElementById("credit-amount").value = ""; // Clear input field
+    
+            alert("Credit request sent to admin successfully!");
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to send credit request. Please try again.");
+        }
+    });
+    
+    
+    
+
     document.getElementById("dashboard-link").addEventListener("click", function () {
         window.location.href = "dashboard.html";
     });
 
-    // Logout functionality
     document.getElementById("logout-btn").addEventListener("click", function () {
         localStorage.removeItem("username");
         window.location.href = "login.html";

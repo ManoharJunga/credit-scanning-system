@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+.container {
+    display: flex;
+    height: 90vh;
+}
+
+.left-panel, .right-panel {
+    flex: 1;
+    padding: 20px;
+    background: white;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+iframe {
+    width: 100%;
+    height: 80vh;
+    border: 1px solid #ddd;
+}
+
+#scan-results {
+    background: #f9f9f9;
+    padding: 15px;
+    min-height: 80vh;
+    border-radius: 5px;
+}

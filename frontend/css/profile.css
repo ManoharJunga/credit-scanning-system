@@ -208,3 +208,73 @@ header h1 {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+
+.file-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.file-item p {
+    flex: 1;
+    margin: 0;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.view-btn,
+.delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Set a fixed width */
+    height: 40px; /* Set a fixed height */
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.view-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.view-btn i,
+.delete-btn i {
+    margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+    .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .view-btn,
+    .delete-btn {
+        width: 100%;
+        margin-top: 5px;
+    }
+}

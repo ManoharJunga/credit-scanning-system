@@ -11,11 +11,14 @@ const router = express.Router();
 const storage = multer.diskStorage({
     destination: "uploads/",
     filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
         const ext = path.extname(file.originalname);
-        cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+        const name = path.basename(file.originalname, ext).replace(/\s+/g, "_");
+        const uniqueSuffix = Date.now(); // Unique identifier
+        cb(null, `${name}_${uniqueSuffix}${ext}`); // Prevent overwriting
     }
 });
+
+
 
 const upload = multer({ storage }).any(); // Accepts any file field name
 
@@ -138,5 +141,101 @@ router.get("/uploads/file/:filename", (req, res) => {
         res.sendFile(filePath);
     });
 });
+
+router.delete("/delete/:filename", (req, res) => {
+    const { filename } = req.params;
+    const filePath = path.join(__dirname, "../uploads", filename);
+
+    // Check if file exists
+    if (fs.existsSync(filePath)) {
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                return res.status(500).json({ message: "Error deleting file" });
+            }
+            res.json({ message: "File deleted successfully" });
+        });
+    } else {
+        res.status(404).json({ message: "File not found" });
+    }
+});
+
+// 📌 File Upload Route with AI Matching
+router.post("/", upload, async (req, res) => {
+    try {
+        console.log("📤 File upload request received");
+
+        const { username } = req.body;
+        const files = req.files;
+
+        if (!files || files.length === 0) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        const file = files[0];
+
+        // Get user details
+        const user = await findUserByUsername(username);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Check credits
+        if (user.credits <= 0) {
+            return res.status(400).json({ message: "Not enough credits to upload" });
+        }
+
+        // Deduct 1 credit per upload
+        const updatedCredits = user.credits - 1;
+        await updateCredits(user.id, updatedCredits);
+
+        // Read file content if it's a text-based file (for AI processing)
+        let content = null;
+        const allowedTextTypes = [".txt", ".md", ".json"];
+        if (allowedTextTypes.includes(path.extname(file.filename))) {
+            content = fs.readFileSync(file.path, "utf8");
+        }
+
+        // Insert file details into the uploads table
+        const sql = "INSERT INTO uploads (filename, user_id, uploaded_at, content) VALUES (?, ?, CURRENT_TIMESTAMP, ?)";
+        const params = [file.filename, user.id, content];
+
+        let documentId;
+        await new Promise((resolve, reject) => {
+            db.run(sql, params, function (err) {
+                if (err) reject(err);
+                else {
+                    documentId = this.lastID;
+                    resolve();
+                }
+            });
+        });
+
+        // Trigger AI-based matching if content is available
+        let aiMatches = [];
+        if (content) {
+            const docs = await new Promise((resolve, reject) => {
+                db.all("SELECT * FROM uploads WHERE id != ?", [documentId], (err, docs) => {
+                    if (err) reject(err);
+                    else resolve(docs);
+                });
+            });
+
+            aiMatches = await aiBasedMatching(content, docs);
+        }
+
+        res.json({
+            message: "File uploaded successfully!",
+            filename: file.filename,
+            filePath: `/uploads/${file.filename}`,
+            updatedCredits,
+            aiMatches, // Returning AI-based matches
+        });
+
+    } catch (error) {
+        console.error("❌ Error handling file upload:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
 
 module.exports = router;
