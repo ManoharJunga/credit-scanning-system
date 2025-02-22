@@ -1,3 +1,4 @@
+/* General Styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,36 +6,151 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Header Styling */
 header {
-    background: #007bff;
+    background: linear-gradient(to right, #1e3a8a, #3b82f6);
     color: white;
-    text-align: center;
-    padding: 15px;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
+
+/* Main Container */
 .container {
     display: flex;
-    height: 90vh;
+    width: 90%;
+    max-width: 100%;
+    margin: 20px auto;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.left-panel, .right-panel {
+/* Left Panel - PDF Preview */
+.left-panel {
     flex: 1;
     padding: 20px;
-    background: white;
-    margin: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-right: 2px solid #ddd;
+    text-align: center;
 }
 
-iframe {
+.left-panel h2 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+#pdf-preview {
     width: 100%;
-    height: 80vh;
-    border: 1px solid #ddd;
+    max-height: 1000px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+/* Right Panel - AI Scan Results */
+.right-panel {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+}
+
+.right-panel h2 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    color: #333;
 }
 
 #scan-results {
-    background: #f9f9f9;
-    padding: 15px;
-    min-height: 80vh;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    white-space: pre-line; /* Preserve text format */
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-panel, .right-panel {
+        border-right: none;
+        padding: 15px;
+    }
+
+    #pdf-preview {
+        max-height: 300px;
+    }
+}
+
+
+.credits-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+#user-credits {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#logout-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#logout-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* User Info */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    color: white;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+/* Alert Box (Permanent on Page) */
+#alert-container {
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Success Alert */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 2px solid #28a745;
+}
+
+/* Error Alert */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 2px solid #dc3545;
 }

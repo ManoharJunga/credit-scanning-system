@@ -9,36 +9,36 @@
 </head>
 <body>
     <header>
-        <h1><i class="fa-solid fa-file"></i> AI Document Analysis</h1>
+        <h1><i class="fa-solid fa-file-upload"></i> Cathago Document Scanning System</h1>
+        <div class="user-info">
+            <a href="profile.html" id="username-link">
+                <i class="fa-solid fa-user"></i>
+                <span id="username-display">Loading...</span>
+            </a>
+            <span id="user-credits" class="credits-badge">
+                <i class="fa-solid fa-coins"></i> Credits: -
+            </span>
+            <button id="logout-btn">
+                <i class="fa-solid fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
     </header>
     
     <div class="container">
         <div class="left-panel">
             <h2>Uploaded Document</h2>
-            <iframe id="document-viewer" src="" frameborder="0"></iframe>
+            <img id="pdf-preview" alt="PDF Preview" style="max-width: 100%; border: 1px solid #ccc;"/>
         </div>
         <div class="right-panel">
+            <div id="alert-container"></div>
             <h2>AI Scan Results</h2>
-            <div id="scan-results">
-                <p>Analyzing document...</p>
-            </div>
+            <p id="scan-results">Analyzing document...</p>
         </div>
     </div>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const params = new URLSearchParams(window.location.search);
-            const filePath = params.get("file");
-            const aiResults = params.get("results");
-            
-            if (filePath) {
-                document.getElementById("document-viewer").src = filePath;
-            }
-            
-            if (aiResults) {
-                document.getElementById("scan-results").innerHTML = decodeURIComponent(aiResults);
-            }
-        });
-    </script>
+
+    <script src="js/aiscan.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
 </body>
 </html>

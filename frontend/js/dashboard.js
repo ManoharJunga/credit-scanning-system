@@ -1,5 +1,5 @@
 class Dashboard {
-    static selectedFiles = []; // Store files in memory until upload
+    static selectedFiles = [];
 
     static async init() {
         console.log("✅ Dashboard.js Loaded");
@@ -17,23 +17,16 @@ class Dashboard {
             }
 
             const response = await fetch(`http://localhost:3000/user/${username}`);
-            const data = await response.json();
-
-            console.log("Fetched user from DB:", data);
-            let credits = data.credits; 
-
-            const usernameDisplay = document.getElementById("username-display");
-            const creditCount = document.getElementById("user-credits");
-
-            if (!usernameDisplay || !creditCount) {
-                console.error("⚠️ Missing elements: Ensure 'username-display' and 'user-credits' exist in HTML.");
-                return;
+            if (!response.ok) {
+                throw new Error("Failed to fetch user data.");
             }
+            const data = await response.json();
+            console.log("Fetched user from DB:", data);
 
-            creditCount.innerHTML = `<i class="fa-solid fa-coins"></i> Credits: ${credits}`;
-            usernameDisplay.textContent = data.username;
+            document.getElementById("username-display").textContent = data.username;
+            document.getElementById("user-credits").innerHTML = `<i class="fa-solid fa-coins"></i> Credits: ${data.credits}`;
 
-            sessionStorage.setItem("credits", credits);
+            sessionStorage.setItem("credits", data.credits);
         } catch (error) {
             console.error("❌ Error loading user data:", error);
         }
@@ -67,8 +60,7 @@ class Dashboard {
             this.storeFiles(files);
         });
 
-        uploadBtn.addEventListener("click", async (e) => {
-            e.preventDefault(); 
+        uploadBtn.addEventListener("click", async () => {
             if (this.selectedFiles.length === 0) {
                 alert("⚠️ No files selected!");
                 return;
@@ -79,33 +71,31 @@ class Dashboard {
 
     static storeFiles(files) {
         if (files.length === 0) return;
-
         this.selectedFiles = files;
-        const uploadStatus = document.getElementById("upload-status");
-
-        uploadStatus.innerHTML = `<div class="alert alert-info">Selected Files: ${files.map(f => f.name).join(", ")}</div>`;
+        document.getElementById("upload-status").innerHTML = `<div class="alert alert-info">Selected Files: ${files.map(f => f.name).join(", ")}</div>`;
         console.log("📂 Files Stored:", this.selectedFiles);
     }
 
     static async handleFileUploads() {
-        const uploadStatus = document.getElementById("upload-status");
-        let credits = parseInt(sessionStorage.getItem("credits")) || 0;
-        const username = localStorage.getItem("username");
+        try {
+            const uploadStatus = document.getElementById("upload-status");
+            let credits = parseInt(sessionStorage.getItem("credits")) || 0;
+            const username = localStorage.getItem("username");
 
-        if (!username) {
-            uploadStatus.innerHTML = `<div class="alert alert-danger">⚠️ User not found. Please log in.</div>`;
-            return;
-        }
+            if (!username) {
+                uploadStatus.innerHTML = `<div class="alert alert-danger">⚠️ User not found. Please log in.</div>`;
+                return;
+            }
 
-        if (credits <= 0) {
-            uploadStatus.innerHTML = `<div class="alert alert-danger">⚠️ Insufficient Credits.</div>`;
-            return;
-        }
+            if (credits <= 0) {
+                uploadStatus.innerHTML = `<div class="alert alert-danger">⚠️ Insufficient Credits.</div>`;
+                return;
+            }
 
-        for (const file of this.selectedFiles) {
-            uploadStatus.innerHTML = `<div class="alert">Uploading ${file.name}...</div>`;
+            for (const file of this.selectedFiles) {
+                uploadStatus.innerHTML = `<div class="alert">Uploading ${file.name}...</div>`;
+                console.log("📂 Uploading file:", file.name);
 
-            try {
                 const formData = new FormData();
                 formData.append("document", file);
                 formData.append("username", username);
@@ -115,34 +105,37 @@ class Dashboard {
                     body: formData,
                 });
 
-                const result = await response.json();
+                let result;
+                try {
+                    result = await response.json();
+                } catch (jsonError) {
+                    console.error("❌ JSON Parse Error:", jsonError);
+                    uploadStatus.innerHTML = `<div class="alert alert-danger">❌ Upload Failed: Invalid response from server.</div>`;
+                    return;
+                }
+
                 console.log("📤 Upload Response:", result);
 
-                if (result.success) {
+                if (response.ok && result.filename) {
                     uploadStatus.innerHTML = `<div class="alert alert-success">✅ Upload Successful!</div>`;
-                    
+
                     credits--;
                     sessionStorage.setItem("credits", credits);
-                    
-                    console.log("Updated credits:", credits);
-                    await new Promise(resolve => setTimeout(resolve, 500)); // Small delay
-                    this.loadUserData(); 
 
-                    console.log("Redirecting to:", `aiscan.html?doc=${encodeURIComponent(result.documentPath)}`);
-                    setTimeout(() => {
-                        window.location.href = `aiscan.html?doc=${encodeURIComponent(result.documentPath)}`;
-                    }, 1000);
+                    console.log("✅ Upload Successful! Redirecting now...");
+                    window.location.href = `aiscan.html?doc=${encodeURIComponent(result.filePath)}`;
+                    return; 
                 } else {
-                    uploadStatus.innerHTML = `<div class="alert alert-danger">❌ Upload Failed: ${result.message || "Unknown Error"}</div>`;
+                    uploadStatus.innerHTML = `<div class="alert alert-danger">❌ Upload Failed: ${result.message || "Unknown error."}</div>`;
+                    return;
                 }
-            } catch (error) {
-                console.error("❌ Upload Error:", error);
-                uploadStatus.innerHTML = `<div class="alert alert-danger">❌ Upload Failed. Check console.</div>`;
             }
-        }
 
-        // Clear stored files after upload
-        this.selectedFiles = [];
+            this.selectedFiles = [];
+        } catch (error) {
+            console.error("🚨 Upload Error:", error);
+            document.getElementById("upload-status").innerHTML = `<div class="alert alert-danger">❌ Upload failed: ${error.message}</div>`;
+        }
     }
 
     static setupLogoutButton() {

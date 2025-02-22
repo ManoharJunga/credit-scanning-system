@@ -65,6 +65,7 @@ db.run(`
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER NOT NULL,
       topic TEXT NOT NULL,
+      text_content TEXT NOT NULL,
       timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )
@@ -72,9 +73,9 @@ db.run(`
     if (err) {
       console.error('Error creating scans table:', err.message);
     } else {
-      console.log('Scans table created or already exists.');
+      console.log('Scans table updated or already exists.');
     }
   });
-  
+
 
 module.exports = db;

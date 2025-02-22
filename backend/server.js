@@ -6,6 +6,8 @@ const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const creditRoutes = require('./routes/creditRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const matchRoutes = require('./routes/matchRoutes'); // New route for AI matching
+const scanRoutes = require('./routes/scanRoutes'); // New route for scan data storage
 const path = require('path');
 const app = express();
 
@@ -21,6 +23,8 @@ app.use('/admin', adminRoutes);
 app.use('/credits', creditRoutes);
 app.use('/upload', uploadRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api", matchRoutes); // New route for AI matching
+app.use("/scan", scanRoutes);
 
 
 // Define the port to listen on, defaulting to 3000 if not specified in .env
@@ -35,17 +39,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`); // More descriptive log message
 });
-
-
-// Example of a POST route (you would add your actual routes here)
-// app.post('/users', (req, res) => {
-//   const { username, password } = req.body;
-//   // ... your logic to create a user ...
-//   res.status(201).json({ message: 'User created successfully' });
-// });
-
-// Example of a GET route (you would add your actual routes here)
-// app.get('/users', (req, res) => {
-//     // ... your logic to fetch users ...
-//     res.status(200).json({ users: [] }); // Or send the actual users data
-// });
