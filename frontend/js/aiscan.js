@@ -72,6 +72,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.log("Fetched user from DB:", data);
     document.getElementById("username-display").textContent = data.username;
     document.getElementById("user-credits").innerHTML = `<i class="fa-solid fa-coins"></i> Credits: ${data.credits}`;
+    document.getElementById("dashboard-link").addEventListener("click", function () {
+        window.location.href = "dashboard.html";
+    });
+
+    document.getElementById("logout-btn").addEventListener("click", function () {
+        localStorage.removeItem("username");
+        window.location.href = "login.html";
+    });
 
     if (!username) {
         window.location.href = "login.html";
@@ -157,6 +165,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("❌ Error loading PDF: ", error);
         document.getElementById("scan-results").innerText = "Failed to extract text from the document.";
     });
+    
 });
 
 // ✅ Function to Highlight Matching Text
@@ -189,6 +198,9 @@ function highlightMatches(plagiarismData) {
         }
     });
 
-    resultsHTML += "</ul>";
     scanResultsElement.innerHTML += resultsHTML;
+
+    
 }
+
+
