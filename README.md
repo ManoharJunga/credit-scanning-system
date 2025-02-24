@@ -1,11 +1,4 @@
-Here’s a **README.md** file with setup instructions for your project. It includes details for both **frontend** and **backend**, covering installation, configuration, and usage.  
-
----
-
-### **README.md**  
-
-```md
-# Credit Scanning System - Admin Dashboard  
+# Credit Scanning System - Admin Dashboard
 
 This is a **Credit Scanning System** that includes an **Admin Dashboard** to manage users, credit requests, and scanned data. The system is built using **HTML, CSS, JavaScript (Frontend)** and **Node.js with Express.js (Backend)**, and uses **SQLite** for data storage.
 
@@ -34,7 +27,7 @@ This is a **Credit Scanning System** that includes an **Admin Dashboard** to man
 
 ---
 
-## 📂 Project Structure  
+## 📚 Project Structure  
 
 ```
 Credit-Scanning-System/
@@ -42,22 +35,57 @@ Credit-Scanning-System/
 │   ├── index.html
 │   ├── css/
 │   │   ├── style.css
+│   │   ├── dashboard.css
+│   │   ├── login.css
+│   │   ├── profile.css
+│   │   ├── register.css
+│   │   ├── scan_result.css
 │   ├── js/
 │   │   ├── admin.js
+│   │   ├── aiscan.js
+│   │   ├── dashboard.js
+│   │   ├── login.js
+│   │   ├── profile.js
+│   │   ├── register.js
 │   ├── assets/
+│   ├── admin.html
+│   ├── aiscan.html
+│   ├── dashboard.html
+│   ├── login.html
+│   ├── profile.html
+│   ├── register.html
 │── backend/
-│   ├── server.js
+│   ├── controllers/
+│   │   ├── adminController.js
+│   │   ├── creditController.js
+│   │   ├── scanController.js
+│   │   ├── userController.js
+│   ├── db/
+│   │   ├── credit_system.db
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   ├── models/
+│   │   ├── creditRequests.js
+│   │   ├── scanModel.js
+│   │   ├── uploadModel.js
+│   │   ├── userModel.js
 │   ├── routes/
-│   │   ├── userRoutes.js
 │   │   ├── adminRoutes.js
 │   │   ├── creditRoutes.js
-│   │   ├── uploadRoutes.js
 │   │   ├── matchRoutes.js
 │   │   ├── scanRoutes.js
-│   ├── database/
-│   │   ├── database.sqlite
+│   │   ├── uploadRoutes.js
+│   │   ├── userRoutes.js
+│   ├── utils/
+│   │   ├── matching.js
 │   ├── uploads/
 │   ├── .env
+│   ├── .gitignore
+│   ├── database.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── server.js
+│   ├── your-database.db
 │── README.md
 ```
 
@@ -103,7 +131,7 @@ No setup is needed for the frontend. Simply open the `frontend/index.html` file 
 
 ---
 
-## 📡 API Routes  
+## 💼 API Routes  
 
 | Route          | Method | Description |
 |---------------|--------|-------------|
@@ -124,23 +152,14 @@ No setup is needed for the frontend. Simply open the `frontend/index.html` file 
 
 ---
 
-## 📁 File Storage  
+## 💽 File Storage  
 
 - Uploaded documents are stored in the `uploads/` folder  
 - The backend serves uploaded files via `/uploads`  
 
 ---
 
-## 📌 Notes  
-
-- This project does **NOT** use external frameworks for the frontend  
-- Backend is built with **Node.js (Express)**  
-- Data is stored in **SQLite** for simplicity  
-- Authentication is **basic username-password login**  
-
----
-
-## 🚀 Future Improvements  
+## 📆 Future Improvements  
 
 - Add JWT-based authentication  
 - Implement a React-based frontend  
@@ -151,14 +170,4 @@ No setup is needed for the frontend. Simply open the `frontend/index.html` file 
 ## 📧 Contact  
 
 For any issues or suggestions, feel free to reach out! 🚀
-```
 
----
-
-### **Changes & Enhancements:**
-✔ **Formatted for readability**  
-✔ **Step-by-step setup guide**  
-✔ **Clear API documentation**  
-✔ **Describes project features & structure**  
-
-This README will make your project look more professional and **human-written**. Let me know if you need any modifications! 🚀
