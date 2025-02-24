@@ -133,14 +133,28 @@ No setup is needed for the frontend. Simply open the `frontend/index.html` file 
 
 ## 💼 API Routes  
 
-| Route          | Method | Description |
-|---------------|--------|-------------|
-| `/user`       | GET    | Fetch user details |
-| `/admin`      | GET    | Admin dashboard data |
-| `/credits`    | POST   | Request or update credits |
-| `/upload`     | POST   | Upload files |
-| `/scan`       | GET    | Retrieve scan data |
-| `/api/match`  | POST   | AI Matching system |
+
+| Route                      | Method  | Description                                      | Authentication |
+|----------------------------|---------|--------------------------------------------------|----------------|
+| `/user/register`           | POST    | Register a new user                             | ❌             |
+| `/user/login`              | POST    | User login                                      | ❌             |
+| `/user/:username`          | GET     | Fetch user credits by username                 | ❌             |
+| `/admin`                   | GET     | Admin dashboard data                           | ✅             |
+| `/admin/update-credits`    | POST    | Update user credits (Admin only)               | ✅             |
+| `/credits/request`         | POST    | Request additional credits                     | ❌             |
+| `/credits/manage`          | POST    | Approve or deny credit requests (Admin only)   | ✅             |
+| `/credits/pending`         | GET     | Fetch pending credit requests                  | ✅             |
+| `/credits/scans-per-user`  | GET     | Get number of scans per user per day           | ✅             |
+| `/credits/common-topics`   | GET     | Get the most common scanned topics             | ✅             |
+| `/credits/top-users`       | GET     | Get top users by scan count and credit usage   | ✅             |
+| `/credits/credit-usage`    | GET     | Get overall credit usage statistics            | ✅             |
+| `/upload`                  | POST    | Upload a file                                  | ❌             |
+| `/uploads/:username`       | GET     | Fetch user’s uploaded files                    | ❌             |
+| `/uploads/file/:filename`  | GET     | Retrieve a specific uploaded file              | ❌             |
+| `/delete/:filename`        | DELETE  | Delete an uploaded file                        | ❌             |
+| `/scan/add`                | POST    | Add a new scan entry                           | ❌             |
+| `/scan/`                   | GET     | Retrieve all scan data                         | ❌             |
+| `/match`                   | POST    | Perform AI-based document matching & plagiarism check | ❌ |
 
 ---
 
